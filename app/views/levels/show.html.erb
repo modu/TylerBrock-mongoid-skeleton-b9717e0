@@ -1,0 +1,8 @@
+<%= form_tag({:controller => "levels", :action => "update"}, :method => "get", :class => "he ram")  do %>
+
+<%= collection_select(:level, :levelName, @lc, :levelName, :levelName, options ={:prompt => "-Please Select a level"}, :class =>"level", :size =>29) %> 
+
+<%= submit_tag("LOAD finally ")%>			
+
+
+<% end %>

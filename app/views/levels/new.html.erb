@@ -1,0 +1,104 @@
+
+<html>
+<body>
+<h1 align="center">  <Strong >Custom Level Creator</strong> </h1>
+
+<form accept-charset="UTF-8" action="/levels" class="new_level" id="new_level" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="rqZpb7+iHvw91Ic9/10bNdlRrUaLCZjdX8Y2uU/UtfE=" /></div>
+  
+
+<%= label_tag 'creatorsName'%> <%= text_field_tag 'creatorsName', nil ,:placeholder => 'enter Creator\'s name' %>
+</br>
+
+<%= label_tag 'LevelName'%> <%= text_field_tag 'levelName', nil ,:placeholder => 'enter level\'s name' %>
+</br>	
+<%= label_tag 'startPoint'%> <%= text_field_tag 'startPoint', nil ,:placeholder => 'enter start point' %>
+</br>	
+<%= label_tag 'endPoint'%> <%= text_field_tag 'endPoint',nil ,:placeholder => 'enter end point' %>
+		</br>
+<%= label_tag 'timeLimit'%> <%= text_field_tag 'timeLimit', nil,:placeholder => 'enter time limit ..' %>
+		</br>
+<%= label_tag 'title'%> <%= text_field_tag 'title',nil ,:placeholder => 'enter title  ..' %>
+		</br>
+<%= label_tag 'totalTrials'%> <%= text_field_tag 'totalTrials', nil,:placeholder => 'enter  number of trials ..' %>
+		</br>
+</br>
+</br>
+	
+ <div class= "RadioButton" id='qtradio'>
+	    Question Type </br>
+	<div id= 'rdnormal'>
+			<%= radio_button_tag 'question_type', 'normal'  %>    normal
+			<%= text_field_tag 'questions', nil, :placeholder => 'Enter QuEsTion Type :)' %>
+  </div> 	
+  <div class = 'Radioqtm'>
+      <%= radio_button_tag 'question_type', 'Measurement' %>   		Measurement
+      	  <div id= txtbtnkcinput1  class= "clonedInput" >
+							<%=text_field_tag 'sp1', nil, :placeholder => 'Enter Start Point' %>   		
+							<%=text_field_tag 'ep1',   nil,   :placeholder => 'Enter End Point'   %>  
+							<%=text_field_tag 'fp1',  nil,  :placeholder => 'Enter Flag Point'  %>  
+							<%=text_field_tag 'answer1',     nil,     :placeholder => 'Enter answer here' %>  																		      
+					</div>
+					<div id=hidebtnm  >
+				<input type="button" id="btnadd" value="Add new measurement" /> 
+				<input type="button" id="btnDel" value="remove name"  /> 
+				  </div>
+	</div>
+	
+ </div> 
+
+
+ <div class= "RadioButton" id='qsradio'>
+	  Question Sequence </br>
+	    <%= radio_button_tag 'question_sequence', 'random'%> Random </br>
+	    <%= radio_button_tag 'question_sequence', 'random_once'%> Random Once </br>
+	    <%= radio_button_tag 'question_sequence', 'as_in_instruction_set'%> As in instruction set </br>
+			<%= radio_button_tag 'question_sequence',  'rbbkt' %>    bkt 
+				<div id= textboxkc1 class = "tobeclonedtextkc">
+						<%= text_field_tag 'kcs1', nil, :placeholder => 'Enter value of KC ' %>
+			  </div>
+			<div id = hidekc >	
+				<input type="button" id="btntextkcadd" value="add kc text field" />
+				<input type="button" id="btntextkcdel" value="remove Kc text Field" /> 
+			</div>
+			<div id= 'dtree'>
+				<%= radio_button_tag 'question_sequence',  'rbdtree'     %>    dtree
+				<div id= textbinsize1 class = "tobeclonedtextbinsize">
+				<%= text_field_tag 'binsize1', nil, :placeholder => 'Enter Bin Size ' %>
+				</div>
+				<div id = hidebs >	
+				<input type="button" id="btntextaddbinsize" value="AdD MOre Bin SiZe" />
+				<input type="button" id="btntextdelbinsize" value="remove it" /> 
+			  </div>
+			</div>
+	</div>  					
+ </div>  
+	 
+ <div class= "RadioButton">
+	  TYPE </br>
+			<%= radio_button_tag 'type', 'At_Midpoint'%>    At_midpoint
+     	<%= radio_button_tag 'type', 'at 0' %>   		At 0
+  		<%= radio_button_tag 'type', 'at 1/4s'%>     At 1/4s
+   		<%= radio_button_tag 'type', 'at 10s'%>      At 10s
+     <%= radio_button_tag 'type', 'at Whole Number' %> At Whole Number
+ </div>
+
+	<div class= "RadioButton">
+	  MODE </br>
+			<%= radio_button_tag 'mode', 'Click' %>    click
+     	<%= radio_button_tag 'mode', 'Type' %>   		Type
+  		<%= radio_button_tag 'mode', 'Mix!' %>     Mix!
+   		<%= radio_button_tag 'mode', 'Random'%>      Random
+	</div>
+  <div class="actions">
+    <input id="level_submit" name="commit" type="submit" value="Sign up" />
+  </div>
+
+
+</form>
+<!-- <%= debug(params) if Rails.env.development? %>  -->
+</body>
+
+
+
+
+</html>

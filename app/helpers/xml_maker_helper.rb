@@ -1,0 +1,2 @@
+module XmlMakerHelper
+end
