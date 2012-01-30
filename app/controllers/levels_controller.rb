@@ -43,13 +43,34 @@ class LevelsController < ApplicationController
   end
 
   def update
+    @sp = []
+    @ep = []
+    @fp = []
+    @answer = []
     temp = params[:level][:levelName]
     @levelOb = Level.all_of(levelName: temp).first
     @questionType = [@levelOb.questionType == 'normal', @levelOb.questionType == 'Measurement']
     @questionSequence = [@levelOb.questionSequence == 'random', @levelOb.questionSequence == 'random_once', @levelOb.questionSequence == 'as_in_instruction_set', @levelOb.questionSequence == 'rbbkt', @levelOb.questionSequence == 'rbdtree']
     @type = [@levelOb.type == 'At_Midpoint', @levelOb.type == 'at 0', @levelOb.type == 'at 1/4s', @levelOb.type == 'at 10s', @levelOb.type == 'at Whole Number']
     @mode = [@levelOb.mode == 'Click', @levelOb.mode == 'Type', @levelOb.mode == 'Mix!',  @levelOb.mode == 'Random']
-    #binding.pry    
+    binding.pry
+    if @levelOb.questionType == 'Measurement'
+      i = 0
+      spcheck = @levelOb.sp.length
+      epcheck = @levelOb.ep.length
+      fpcheck = @levelOb.fp.length
+      answercheck = @levelOb.answer.length
+      @number = spcheck
+      
+      @sp = check(spcheck , @levelOb.sp)
+      @ep = check(epcheck, @levelOb.ep)
+      @fp = check(fpcheck, @levelOb.fp)
+      @answer = check(answercheck, @levelOb.answer)    
+      binding.pry
+    else
+        @questions = @levelOb.questions
+    end #end of if
+    binding.pry    
   end
   def createnew
         spec = [[:title, StringParseFunction.new('title')],
@@ -88,4 +109,17 @@ class LevelsController < ApplicationController
     
   def index 
   end
+  
+  def check(count, array)
+    i = 0
+    @sp2 = []
+    array.each do |t|
+      @sp2[i] = t
+      i = i + 1
+    end
+    return @sp2
+    binding.pry
+  end
+  
+  
 end

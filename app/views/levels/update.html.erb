@@ -31,13 +31,19 @@
 			<%= text_field_tag 'questions', '', :placeholder => 'Enter QuEsTion type :)' %>
   </div> 	
   <div class = 'Radioqtm'>
+	<% i = 1%>
       <%= radio_button_tag 'question_type', 'Measurement', @questionType[1] %>   		Measurement
-      	  <div id= txtbtnkcinput1  class= "clonedInput" >
-							<%=text_field_tag 'sp1', '', :placeholder => 'Enter Start Point' %>   		
-							<%=text_field_tag 'ep1', '',   :placeholder => 'Enter End Point'   %>  
-							<%=text_field_tag 'fp1', '',  :placeholder => 'Enter Flag Point'  %>  
-							<%=text_field_tag 'answer1', '',     :placeholder => 'Enter answer here' %>  																		      
+					<% while @number != 0 do %>
+						<div id= txtbtnkcinput1  class= "clonedInput" >
+							<%=text_field_tag 'sp'+ i.to_s, @sp[i-1], :placeholder => 'Enter Start Point' %>   		
+							<%=text_field_tag 'ep'+ i.to_s, @ep[i-1],   :placeholder => 'Enter End Point'   %>  
+							<%=text_field_tag 'fp'+i.to_s, @fp[i-1],  :placeholder => 'Enter Flag Point'  %>  
+							<%=text_field_tag 'answer'+i.to_s, @answer[i-1],     :placeholder => 'Enter answer here' %>  																		      
 					</div>
+					<% i = i + 1 %>
+					<% @number = @number - 1 %>
+					<% end%>
+					
 					<div id=hidebtnm  >
 				<input type="button" id="btnadd" value="Add new measurement" /> 
 				<input type="button" id="btnDel" value="remove name"  /> 
