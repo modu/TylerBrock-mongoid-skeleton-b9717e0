@@ -12,17 +12,17 @@
 // This file is automatically included by javascript_include_tag :defaults
 $(function(){
 		$("#question_type_normal").click(function(){
+
 			$("#questions").show();
-			$(".clonedInput").hide();
-			$("#hidebtnm").hide();
+			$(".clonedInput").hide(); //hiding measurement text fields
+			$(".hidebtnm").hide(); //hiding button as a class
+			
 		}); //normal text box show 
 		
 		$("#question_type_Measurement").click(function(){
 			$("#questions").hide();
-			$("#hidebtnm").show();
 			$(".clonedInput").show();
-			$("#txtbtnkcinput1").show();
-			$("#hidebtnm").show();
+			$(".hidebtnm").show();
 		});//quesiton_type_Measurement
 		
 		$("#question_sequence_rbbkt").click(function(){

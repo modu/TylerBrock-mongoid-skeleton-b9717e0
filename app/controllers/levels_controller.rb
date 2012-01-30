@@ -43,16 +43,23 @@ class LevelsController < ApplicationController
   end
 
   def update
+=begin
     @sp = []
     @ep = []
     @fp = []
     @answer = []
+    @bkt = []
+    @rbdtree = []
+=end
+    
     temp = params[:level][:levelName]
     @levelOb = Level.all_of(levelName: temp).first
     @questionType = [@levelOb.questionType == 'normal', @levelOb.questionType == 'Measurement']
     @questionSequence = [@levelOb.questionSequence == 'random', @levelOb.questionSequence == 'random_once', @levelOb.questionSequence == 'as_in_instruction_set', @levelOb.questionSequence == 'rbbkt', @levelOb.questionSequence == 'rbdtree']
     @type = [@levelOb.type == 'At_Midpoint', @levelOb.type == 'at 0', @levelOb.type == 'at 1/4s', @levelOb.type == 'at 10s', @levelOb.type == 'at Whole Number']
-    @mode = [@levelOb.mode == 'Click', @levelOb.mode == 'Type', @levelOb.mode == 'Mix!',  @levelOb.mode == 'Random']
+    @mode = [@levelOb.mode == 'Click', @levelOb.mode == 'type', @levelOb.mode == 'Mix!',  @levelOb.mode == 'Random']
+    #binding.pry
+=begin
     binding.pry
     if @levelOb.questionType == 'Measurement'
       i = 0
@@ -60,17 +67,40 @@ class LevelsController < ApplicationController
       epcheck = @levelOb.ep.length
       fpcheck = @levelOb.fp.length
       answercheck = @levelOb.answer.length
-      @number = spcheck
+      #for finding number of times to iterate "for" loop in html.erb
+      @number = [spcheck,epcheck,fpcheck, answercheck].max #as they(spcheck,epcheck..) may vary , so max, used in html.erb
       
       @sp = check(spcheck , @levelOb.sp)
       @ep = check(epcheck, @levelOb.ep)
       @fp = check(fpcheck, @levelOb.fp)
-      @answer = check(answercheck, @levelOb.answer)    
+      @answer = check(answercheck, @levelOb.answer)
       binding.pry
     else
-        @questions = @levelOb.questions
-    end #end of if
-    binding.pry    
+      if @levelOb.questionType == 'normal'
+      @questions = @levelOb.questions
+    end
+    end #end of if (for questionType==measurement)
+    @countbinsize = 0
+    @countkcs = 0
+
+    
+    if @levelOb.questionSequence == 'rbbkt'
+      @countkcs = @levelOb.kcs.length  if  @levelOb.kcs != nil
+      @bkt   = check(@countkcs, @levelOb.kcs)    
+    else 
+      if @levelOb.questionSequence == 'rbdtree' 
+        binding.pry        
+        if  @levelOb.binsizes != nil
+          @countbinsize = @levelOb.binsizes.length
+          @rbdtree  = check(@countbinsize, @levelOb.binsizes)
+        end
+        
+        binding.pry        
+      end
+    end  #end of if (for questionSequence)
+    
+    binding.pry
+=end    
   end
   def createnew
         spec = [[:title, StringParseFunction.new('title')],
@@ -108,6 +138,7 @@ class LevelsController < ApplicationController
   end
     
   def index 
+    
   end
   
   def check(count, array)

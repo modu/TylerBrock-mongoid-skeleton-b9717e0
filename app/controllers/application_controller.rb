@@ -37,6 +37,7 @@ class ArrayParseFunction < ParseFunction
       @hashkey = hashkey
    end
    def parse(hash)
+      return nil unless hash.has_key? @hashkey
       value = hash.fetch(@hashkey).split(',')
       return nil if value.empty?
       return value

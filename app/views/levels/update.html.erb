@@ -25,59 +25,81 @@
 </br>
 	
  <div class= "RadioButton" id='qtradio'>
-	    Question type </br>
+	    <%= label_tag 'Question Type' %>
+	</br></br>
 	<div id= 'rdnormal'>
 			<%= radio_button_tag 'question_type', 'normal', @questionType[0]  %>  normal
-			<%= text_field_tag 'questions', '', :placeholder => 'Enter QuEsTion type :)' %>
+			<% if @questionType[0] %>
+			   <%= text_field_tag 'questions', @levelOb.questions.join(','), :placeholder => 'Enter QuEsTion type :)' %>
+			<% else %>
+			   <%= text_field_tag 'questions',  nil , :placeholder => 'Enter QuEsTion type :)' %>
+			<%end%>
   </div> 	
   <div class = 'Radioqtm'>
-	<% i = 1%>
-      <%= radio_button_tag 'question_type', 'Measurement', @questionType[1] %>   		Measurement
-					<% while @number != 0 do %>
-						<div id= txtbtnkcinput1  class= "clonedInput" >
-							<%=text_field_tag 'sp'+ i.to_s, @sp[i-1], :placeholder => 'Enter Start Point' %>   		
-							<%=text_field_tag 'ep'+ i.to_s, @ep[i-1],   :placeholder => 'Enter End Point'   %>  
-							<%=text_field_tag 'fp'+i.to_s, @fp[i-1],  :placeholder => 'Enter Flag Point'  %>  
-							<%=text_field_tag 'answer'+i.to_s, @answer[i-1],     :placeholder => 'Enter answer here' %>  																		      
-					</div>
-					<% i = i + 1 %>
-					<% @number = @number - 1 %>
+      <%= radio_button_tag 'question_type', 'Measurement', @questionType[1] %>  Measurement <br>  
+      <% if @questionType[1] %>
+			<div id= txtbtnkcinput1  class= "clonedInput" >
+					<% @levelOb.sp.each_index do |i| %>
+							<%=text_field_tag 'sp'+ (i+1).to_s, @levelOb.sp[i], :placeholder => 'Enter Start Point' %>   		
+							<%=text_field_tag 'ep'+ (i+1).to_s, @levelOb.ep[i],   :placeholder => 'Enter End Point'   %>  
+							<%=text_field_tag 'fp'+ (i+1).to_s, @levelOb.fp[i],  :placeholder => 'Enter Flag Point'  %>  
+							<%=text_field_tag 'answer'+ (i+1).to_s, @levelOb.answer[i],     :placeholder => 'Enter answer here' %>
+							<br>																	      
 					<% end%>
+					</div>
+			<% end %>
+				<div id=hidebtnm  >
+			<input type="button" id="btnadd" value="Add new measurement" /> 
+			<input type="button" id="btnDel" value="remove name"  /> 
+			  </div>		
 					
-					<div id=hidebtnm  >
-				<input type="button" id="btnadd" value="Add new measurement" /> 
-				<input type="button" id="btnDel" value="remove name"  /> 
-				  </div>
 	</div>
 	
  </div> 
 
 
  <div class= "RadioButton" id='qsradio'>
-	  Question Sequence </br>
+	    <%= label_tag 'Question Sequence' %>
 	    <%= radio_button_tag 'question_sequence', 'random', @questionSequence[0]%> Random </br>
 	    <%= radio_button_tag 'question_sequence', 'random_once', @questionSequence[1]%> Random Once </br>
 	    <%= radio_button_tag 'question_sequence', 'as_in_instruction_set', @questionSequence[2]%> As in instruction set </br>
-			<%= radio_button_tag 'question_sequence',  'rbbkt', @questionSequence[3] %>    bkt 
-				<div id= textboxkc1 class = "tobeclonedtextkc">
-						<%= text_field_tag 'kcs1', '', :placeholder => 'Enter value of KC ' %>
-			  </div>
+			<%= radio_button_tag 'question_sequence',  'rbbkt', @questionSequence[3] %>    bkt <br>
+			<div id= textboxkc1 class = "tobeclonedtextkc">
+
+      <% if @questionSequence[3] %>		
+	   		<% @levelOb.kcs.each_index do |kc| %>
+						<%= text_field_tag 'kcs' + (kc+1).to_s, @levelOb.kcs[kc], :placeholder => 'Enter value of KC ' %>
+						</br>
+		  	<%end%>
+		     <%else %>
+					<%= text_field_tag 'kcs', nil, :placeholder => 'Enter value of KC ' %>
+		  <%end%>
+		</div>
+
 			<div id = hidekc >	
 				<input type="button" id="btntextkcadd" value="add kc text field" />
 				<input type="button" id="btntextkcdel" value="remove Kc text Field" /> 
 			</div>
+			
 			<div id= 'dtree'>
-				<%= radio_button_tag 'question_sequence',  'rbdtree', @questionSequence[4]     %>    dtree
+				<%= radio_button_tag 'question_sequence',  'rbdtree', @questionSequence[4]     %>    dtree <br>
+				
 				<div id= textbinsize1 class = "tobeclonedtextbinsize">
-				<%= text_field_tag 'binsize1', '', :placeholder => 'Enter Bin Size ' %>
-				</div>
+	      <% if @questionSequence[4] %>
+    				<% @levelOb.binsizes.each_index do |bs| %>
+		        		<%= text_field_tag 'binsize'+ (bs+1).to_s,  @levelOb.binsizes[bs], :placeholder => 'Enter Bin Size ' %>
+		</br>
+				    <%end%>
+        <%else %>
+						<%= text_field_tag 'binsize',  nil, :placeholder => 'Enter Bin Size ' %>
+
+				<%end%>
+				 </div>  
 				<div id = hidebs >	
 				<input type="button" id="btntextaddbinsize" value="AdD MOre Bin SiZe" />
 				<input type="button" id="btntextdelbinsize" value="remove it" /> 
 			  </div>
 			</div>
-	</div>  					
- </div>  
 	 
  <div class= "RadioButton">
 	  type </br>
@@ -98,21 +120,15 @@
 
  <div class= "RadioButton">
 	  db </br>
-			<%= radio_button_tag 'db', 'create'%>  create
-     	<%= radio_button_tag 'db', 'update'%>  update
+			<%= radio_button_tag 'db', 'create', false%>  create
+     	<%= radio_button_tag 'db', 'update', true%>  update
  </div>
 
   <div class="actions">
      <input id="level_submit" name="commit" type="submit" value="SUBMIT!" />
     
   </div>
-
-
 </form>
 <!-- <%= debug(params) if Rails.env.development? %>  -->
 </body>
-
-
-
-
 </html>
